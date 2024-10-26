@@ -17,11 +17,11 @@ Add the following JSON data:
 3) PUT
 enter you path in Postman URL. example http://localhost/my-php-api/api/users.php
 
-In the “Body” tab, add the updated JSON data:\
+In the “Body” tab, add the updated JSON data:
 
 ```json
 {
-    "id": your_id
+    "id": your_id,
     "name": "your_name",
     "surname": "your_surname"
 }
