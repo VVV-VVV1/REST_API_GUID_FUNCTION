@@ -9,6 +9,7 @@ switch($method) {
         // Handle GET request (Retrieve Users)
         $stmt = $conn->query("SELECT * FROM users");
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        header('Content-Type:applicaton/json');
         echo json_encode($users);
         break;
 
