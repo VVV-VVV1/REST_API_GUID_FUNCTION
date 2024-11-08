@@ -9,6 +9,7 @@ switch($method) {
         // Handle GET request (Retrieve Users)
         $stmt = $conn->query("SELECT * FROM users");
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        header('Content-Type:applicaton/json');
         echo json_encode($users);
         break;
 
@@ -17,11 +18,13 @@ switch($method) {
         $data = json_decode(file_get_contents("php://input"));
         if (!$data) {
             http_response_code(400); // Bad Request
+            header('Content-Type:applicaton/json');
             echo json_encode(['error' => 'Invalid JSON data']);
             exit;
         }
         if (!isset($data->name) || !isset($data->surname)) {
             http_response_code(400); // Bad Request
+            header('Content-Type:applicaton/json');
             echo json_encode(['error' => 'Name and surname are required']);
             exit;
         }
@@ -29,6 +32,7 @@ switch($method) {
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
             http_response_code(500); // Internal Server Error
+            header('Content-Type:applicaton/json');
             echo json_encode(['error' => 'Database error']);
             exit;
         }
@@ -36,6 +40,7 @@ switch($method) {
         $stmt->bindParam(':surname', $data->surname);
         if (!$stmt->execute()) {
             http_response_code(500); // Internal Server Error
+            header('Content-Type:applicaton/json');
             echo json_encode(['error' => 'Database error']);
             exit;
         }
@@ -51,6 +56,7 @@ switch($method) {
         $stmt->bindParam(':surname', $data->surname);
         $stmt->bindParam(':id', $data->id);
         if($stmt->execute()) {
+            header('Content-Type:applicaton/json');
             echo json_encode(['message' => 'User updated successfully']);
         }
         break;
@@ -62,6 +68,7 @@ switch($method) {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $data->id);
         if($stmt->execute()) {
+            header('Content-Type:applicaton/json');
             echo json_encode(['message' => 'User deleted successfully']);
         }
         break;
